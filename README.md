@@ -1,5 +1,5 @@
 # word2vec-toy-app
-
+**これは作りかけのアプリです。(とりあえず動きはする)**
 
 # 目次
 - [word2vec-toy-app](#word2vec-toy-app)
