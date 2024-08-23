@@ -117,7 +117,7 @@ with gr.Blocks() as main_app:
         gr.Markdown(("# Gensim 4.3.3のWord2vecのデモアプリ  "
                      "\n・単語分散表現のモデル(`.bin`か`.vec`)を試せます。  "
                      "\n・アプリ起動前に`./model_files/`にモデルのファイルを入れておいてください。  "
-                     "\n・下記リンクにあるWord2vecとfastTextのモデルでの動作を確認済み  "
+                     "\n・下記リンクにあるWord2vecとfastTextの何個かのモデルでの動作を確認済み  "
                      "\n https://qiita.com/"
                      "Hironsan/items/513b9f93752ecee9e670  "
                      "\n https://www.cl.ecei.tohoku.ac.jp/"
@@ -128,37 +128,37 @@ with gr.Blocks() as main_app:
         with gr.Column(scale=9):
             word2vec_model_select = gr.Dropdown(
                 GENSIM_WORDVEC_MODELS,
-                label="分類モデルから使用するものを選択！",
+                label="配置したモデルから使用するものを選択！",
             )
         with gr.Column(scale=1, min_width=160):
             word2vec_model_load_btn = gr.Button(
                 "モデルをロード", scale=1, variant="primary"
             )
     with gr.Row():
-        word2vec_loaded_model = gr.Textbox()
+        word2vec_loaded_model = gr.Textbox(label="ロードされたモデルのパス")
 
-    with gr.Tab("ロードしたモデルの全語彙のリスト"):
+    with gr.Tab("ロードしたモデルの全語彙の一覧"):
         gr.Markdown(
             (
-                "\n **ロードした単語分散表現のモデルの全語彙のリストを表示** \n  "
+                "\n **ロードした単語分散表現のモデルの全語彙の一覧を表示** \n  "
                 "\n・モデルを読み込むと自動的に↓に語彙のリストを表示します  "
                 "\n・読み込んだWord2vecモデルの語彙に無い単語を入力するとエラーです。  "
-                "\n・これはWord2vecの機能を使うので、未知語には対応していないです。  "
-                "\n・詳細はGensimのkeyedvectorsのkey_to_indexから表示しています。  "
+                "\n・Gensimのkeyedvectorsのkey_to_indexから取得して表示しています。  "
                 "\nhttps://stackoverflow.com/questions/"
                 "66868221/gensim-3-8-0-to-gensim-4-0-0"
             )
         )
-        word2vec_model_words_list = gr.Dataframe()
+        word2vec_model_words_list = gr.Dataframe(label="モデルの全語彙の一覧")
 
-    with gr.Tab("ある単語ベクトルとコサイン類似度上位の単語リスト出力"):
+    with gr.Tab("入力した単語とコサイン類似度上位の単語を出力"):
         with gr.Row():
             gr.Markdown(
                 (
-                    "\n **入力した単語ベクトルとコサイン類似度上位の単語リストを出力** \n  "
-                    "\n・「入力した単語ベクトルとのコサイン類似度上位の単語200件」を表示します。  "
+                    "\n **入力した単語リストに対して、コサイン類似度が上位の単語のランキングを出力** \n  "
+                    "\n・「入力した単語と似ている単語200件のランキング」を表示します。  "
+                    "\n・ポジティブはプラスの影響を、ネガティブはマイナスの影響を与えます  "
                     "\n・読み込んだWord2vecモデルの語彙に無い単語を入力するとエラーです。  "
-                    "\n・これはWord2vecの機能を使うので、未知語には対応していないです。  "
+                    "\n・単語(キー)のベクトルに関して色々と計算をした結果を出します。  "
                     "\n・詳細はGensimのdocの「gensim.models.keyedvectors."
                     "KeyedVectors.most_similar」をチェック！  "
                     "\n https://radimrehurek.com/"
@@ -171,12 +171,12 @@ with gr.Blocks() as main_app:
             with gr.Column(scale=2):
 
                 positive_word = gr.Dropdown(
-                    label="対象の単語を入力！(ポジティブ)",
+                    label="プラスの影響を与える単語を入力！(ポジティブ)",
                     multiselect=True,
                     allow_custom_value=True,
                 )
                 negative_word = gr.Dropdown(
-                    label="引く単語を入力！(ネガティブ)",
+                    label="マイナスの影響を与える単語を入力！(ネガティブ)",
                     multiselect=True,
                     allow_custom_value=True,
                 )
@@ -208,10 +208,9 @@ with gr.Blocks() as main_app:
         with gr.Row():
             gr.Markdown(
                 (
-                    "\n **2つの単語リストのコサイン類似度を出力** \n  "
-                    "\n・「入力した2つの単語ベクトルのコサイン類似度」を表示します。  "
+                    "\n **入力した2つの単語リストのコサイン類似度を出力** \n  "
+                    "\n・「入力した2つの単語リストのコサイン類似度」を表示します。  "
                     "\n・読み込んだWord2vecモデルの語彙に無い単語を入力するとエラーです。  "
-                    "\n・これはWord2vecの機能を使うので、未知語には対応していないです。  "
                     "\n・詳細はGensimのdocの「gensim.models.keyedvectors."
                     "KeyedVectors.n_similarity」をチェック！  "
                     "\n https://radimrehurek.com/"

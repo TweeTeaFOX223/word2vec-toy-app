@@ -6,8 +6,8 @@
 - [目次](#目次)
 - [アプリの機能と概要](#アプリの機能と概要)
   - [ロードしたモデルの語彙リストを表示](#ロードしたモデルの語彙リストを表示)
-  - [入力した単語とコサイン類似度上位の単語リストを出力](#入力した単語とコサイン類似度上位の単語リストを出力)
-  - [2つの単語のコサイン類似度を出力](#2つの単語のコサイン類似度を出力)
+  - [入力した単語リストに対してコサイン類似度が上位の単語のランキングを出力](#入力した単語リストに対してコサイン類似度が上位の単語のランキングを出力)
+  - [入力した2つの単語リストのコサイン類似度を出力](#入力した2つの単語リストのコサイン類似度を出力)
 - [ライセンスについて](#ライセンスについて)
 - [アプリの使用方法](#アプリの使用方法)
   - [\[0\]：必要となる環境](#0必要となる環境)
@@ -17,13 +17,17 @@
   - [\[4\]：Pythonの仮想環境の作成とアプリ実行](#4pythonの仮想環境の作成とアプリ実行)
     - [パターンA：venvとrequirements.txtを使用(普通)](#パターンavenvとrequirementstxtを使用普通)
     - [パターンB：Poetryを使用(確実に動かしたい場合)](#パターンbpoetryを使用確実に動かしたい場合)
+- [アプリ起動中に使えるAPI](#アプリ起動中に使えるapi)
 - [使用ライブラリのライセンス](#使用ライブラリのライセンス)
 
 
 # アプリの機能と概要
 Word2vecの学習済みモデルとGensimでサクッと遊ぶために、Gradioを用いて作成したローカル用のWebアプリです。  
   
-GensimのWord2Vecに関する機能を、ローカルで起動したWebアプリからGUIで使えるようにしてみたというものです。  
+GensimのWord2vecに関する機能を、ローカルで起動したWebアプリからGUIで使えるようにしてみたというものです。  
+
+※Word2vecや単語のベクトル化については、この記事がわかりやすいのでオススメです。  
+https://qiita.com/kuroitu/items/c18129bcdd0c343d16ba  
   
 <br>  
   
@@ -37,18 +41,27 @@ GensimのWord2Vecに関する機能を、ローカルで起動したWebアプリ
 | Gradioに渡すDataFrame | Polars 1.1.0 (MIT) |
   
 <br>    
-
+  
 ## ロードしたモデルの語彙リストを表示
-あとで書く  
+未完成の機能なので後で書く。  
 https://stackoverflow.com/questions/66868221/gensim-3-8-0-to-gensim-4-0-0  
   
-## 入力した単語とコサイン類似度上位の単語リストを出力
-あとで書く  
+## 入力した単語リストに対してコサイン類似度が上位の単語のランキングを出力
+・「入力した単語と似ている単語200件のランキング」を表示します。  
+・ポジティブはプラスの影響を、ネガティブはマイナスの影響を与えます  
+・読み込んだWord2vecモデルの語彙に無い単語を入力するとエラーです。  
+・単語(キー)のベクトルに関して色々と計算をした結果を出します。  
+・詳細はGensimのdocの「`gensim.models.keyedvectors.KeyedVectors.most_similar`」をチェック！  
 https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.most_similar
   
-## 2つの単語のコサイン類似度を出力
-あとで書く  
+<br>    
+  
+## 入力した2つの単語リストのコサイン類似度を出力
+・「入力した2つの単語リストのコサイン類似度」を表示します。  
+・読み込んだWord2vecモデルの語彙に無い単語を入力するとエラーです。  
+・詳細はGensimのdocの「gensim.models.keyedvectors.KeyedVectors.n_similarity」をチェック！書く  
 https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.n_similarity  
+  
 <br>    
   
 # ライセンスについて
@@ -121,6 +134,12 @@ python -m venv venv
 poetry install
 poetry run python gradio_app.py
 ```
+  
+<br>  
+  
+# アプリ起動中に使えるAPI
+アプリ起動中にREST APIから関数を使用することができます。画面下部の`Use via API`から確認できます。詳しくはGradio公式ドキュメントをチェック！  
+https://www.gradio.app/guides/getting-started-with-the-python-client
   
 <br>  
   
