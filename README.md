@@ -52,15 +52,17 @@ https://stackoverflow.com/questions/66868221/gensim-3-8-0-to-gensim-4-0-0
 ・読み込んだWord2vecモデルの語彙に無い単語を入力するとエラーです。  
 ・単語(キー)のベクトルに関して色々と計算をした結果を出します。  
 ・詳細はGensimのdocの「`gensim.models.keyedvectors.KeyedVectors.most_similar`」をチェック！  
-https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.most_similar
+https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.most_similar  
+![](https://raw.githubusercontent.com/TweeTeaFOX223/word2vec-toy-app/main/README-image/most_similar.PNG)
   
 <br>    
   
 ## 入力した2つの単語リストのコサイン類似度を出力
 ・「入力した2つの単語リストのコサイン類似度」を表示します。  
 ・読み込んだWord2vecモデルの語彙に無い単語を入力するとエラーです。  
-・詳細はGensimのdocの「gensim.models.keyedvectors.KeyedVectors.n_similarity」をチェック！書く  
+・詳細はGensimのdocの「gensim.models.keyedvectors.KeyedVectors.n_similarity」をチェック！  
 https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.n_similarity  
+![](https://raw.githubusercontent.com/TweeTeaFOX223/word2vec-toy-app/main/README-image/n_similarity.PNG)
   
 <br>    
   
