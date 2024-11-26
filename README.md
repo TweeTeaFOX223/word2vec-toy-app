@@ -16,7 +16,7 @@
   - [\[3\]：学習済みモデルをディレクトリに配置](#3学習済みモデルをディレクトリに配置)
   - [\[4\]：Pythonの仮想環境の作成とアプリ実行](#4pythonの仮想環境の作成とアプリ実行)
     - [パターンA：venvとrequirements.txtを使用(普通)](#パターンavenvとrequirementstxtを使用普通)
-    - [パターンB：Poetryを使用(確実に動かしたい場合)](#パターンbpoetryを使用確実に動かしたい場合)
+    - [パターンB：uvを使用(簡単かつ確実に動作させたい場合)](#パターンbuvを使用簡単かつ確実に動作させたい場合)
 - [アプリ起動中に使えるAPI](#アプリ起動中に使えるapi)
 - [使用ライブラリのライセンス](#使用ライブラリのライセンス)
 
@@ -34,10 +34,10 @@ https://qiita.com/kuroitu/items/c18129bcdd0c343d16ba
 | 技術項目                          | 使用しているもの             |
 | --------------------------------- | ---------------------------- |
 | プログラミング言語                | Python 3.11           |
-| パッケージ管理        | Poetry 1.8.3                          |
+| Pythonのバージョン管理とパッケージ管理       | uv 0.5.4                          |
 | Pythonの仮想環境                  | venv                         |
 | **Word2vecの利用** | Gensim 4.3.3 (LGPLv2.1)                      |
-| **GUIのWebアプリ** | Gradio 4.37.2 (Apache License 2.0)                      |
+| **Web UIのアプリ** | Gradio 5.3.0 (Apache License 2.0)                      |
 | Gradioに渡すDataFrame | Polars 1.1.0 (MIT) |
   
 <br>    
@@ -76,12 +76,15 @@ https://stackoverflow.com/questions/8580223/using-python-module-on-lgpl-license-
 # アプリの使用方法 
 ## [0]：必要となる環境
 
-Pythonのインストールが必須です。Poetryの使用は任意です。動作確認はWindows10とPowerShellとFirefoxでやりました。おそらく他のOSやターミナルでも動くと思います。
+Pythonのインストールが必須です。uvの使用は任意です（軽量・Python本体のバージョン管理が可能・簡単かつ確実な動作が可能となるので推奨です →[インストール＆使用方法のおすすめ記事](https://zenn.dev/turing_motors/articles/594fbef42a36ee)）。
+
+動作確認はWindows10とPowerShellとFirefoxでやりました。おそらく他のOSやターミナルでも動くと思います。
+
   
 | インストールが必要 | 動作確認したver |
 | ---------------------- | --------------- |
 | Python                     | v3.11         |
-| Poetry(任意)                | v1.8.3        |
+| uv(任意)                | v0.5.4        |
   
 <br>  
   
@@ -131,10 +134,10 @@ python -m venv venv
   
 <br>  
   
-### パターンB：Poetryを使用(確実に動かしたい場合)
+### パターンB：uvを使用(簡単かつ確実に動作させたい場合)
 ```
-poetry install
-poetry run python gradio_app.py
+uv sync
+uv run python gradio_app.py
 ```
   
 <br>  
@@ -147,11 +150,11 @@ https://www.gradio.app/guides/getting-started-with-the-python-client
   
 # 使用ライブラリのライセンス
 
-- Gensim 4.3.3 (LGPLv2.1)  
+- Gensim (LGPLv2.1)  
 https://github.com/piskvorky/gensim?tab=LGPL-2.1-1-ov-file#readme
 
-- Gradio 4.37.2 (Apache License 2.0)  
+- Gradio (Apache License 2.0)  
 https://github.com/gradio-app/gradio/blob/main/LICENSE
 
-- Polars 1.1.0 (MIT)  
+- Polars  (MIT)  
 https://github.com/pola-rs/polars?tab=License-1-ov-file
