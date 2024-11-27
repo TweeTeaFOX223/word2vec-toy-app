@@ -18,6 +18,7 @@
     - [パターンA：venvとrequirements.txtを使用(普通)](#パターンavenvとrequirementstxtを使用普通)
     - [パターンB：uvを使用(簡単かつ確実に動作させたい場合)](#パターンbuvを使用簡単かつ確実に動作させたい場合)
 - [アプリ起動中に使えるAPI](#アプリ起動中に使えるapi)
+- [`uv.lock`から`requirements.txt`を生成する方法](#uvlockからrequirementstxtを生成する方法)
 - [使用ライブラリのライセンス](#使用ライブラリのライセンス)
 
 
@@ -146,6 +147,15 @@ uv run python gradio_app.py
 # アプリ起動中に使えるAPI
 アプリ起動中にREST APIから関数を使用することができます。画面下部の`Use via API`から確認できます。詳しくはGradio公式ドキュメントをチェック！  
 https://www.gradio.app/guides/getting-started-with-the-python-client
+  
+<br>  
+  
+# `uv.lock`から`requirements.txt`を生成する方法
+
+このコマンドで生成できます。パッと検索しても書いてる記事見つからなかったので一応記載。  
+`uv export --format requirements-txt --output-file requirements.txt `  
+
+公式ドキュメントより  https://docs.astral.sh/uv/reference/cli/#uv-export  
   
 <br>  
   
