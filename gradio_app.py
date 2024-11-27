@@ -1,11 +1,12 @@
-import gradio as gr
 import glob
 import os
 from os.path import splitext
-import polars as pl
-import gensim
 
-import gensim_scripts.gensim_w2v as ensim_w2v
+import gensim
+import gradio as gr
+import polars as pl
+
+import gensim_scripts.gensim_w2v as gensim_w2v
 
 
 # 状態管理のクラス(Stateの変数は全てここに入れる) ###########################################
@@ -25,9 +26,7 @@ def glob_win_pass_slash_fix(globlist):
 
 GENSIM_WORDVEC_MODELS = glob_win_pass_slash_fix(
     glob.glob("./model_files/**/*.vec", recursive=True)
-) + glob_win_pass_slash_fix(
-    glob.glob("./model_files/**/*.bin", recursive=True)
-)
+) + glob_win_pass_slash_fix(glob.glob("./model_files/**/*.bin", recursive=True))
 
 
 # Gradio内部で行う処理の関数 ###########################################
@@ -45,26 +44,22 @@ def ready_interactive():
 
 
 def gr_load_word2vec_model(gradio_state: GradioState, model_pass):
-    print("load model:"+model_pass)
+    print("load model:" + model_pass)
 
     if "/fasttext-models/" in model_pass:
-        gradio_state.loaded_w2v_model_file = \
-            gensim.models.fasttext.load_facebook_model(
-                model_pass
-            ).wv
+        gradio_state.loaded_w2v_model_file = gensim.models.fasttext.load_facebook_model(
+            model_pass
+        ).wv
 
     elif "/word2vec-models/" in model_pass:
-
         if ".bin" in splitext(model_pass):
             binary = True
         else:
             binary = False
 
-        gradio_state.loaded_w2v_model_file = \
-            gensim.models.KeyedVectors.load_word2vec_format(
-                model_pass,
-                binary=binary
-            )
+        gradio_state.loaded_w2v_model_file = (
+            gensim.models.KeyedVectors.load_word2vec_format(model_pass, binary=binary)
+        )
 
     print("あああああ", gradio_state.loaded_w2v_model_file)
     return model_pass
@@ -72,13 +67,10 @@ def gr_load_word2vec_model(gradio_state: GradioState, model_pass):
 
 def gr_get_word2vec_model_words_list(gradio_state: GradioState):
     word2vec_model = gradio_state.loaded_w2v_model_file
-    return ensim_w2v.word2vec_all_words_to_pldf(word2vec_model)
+    return gensim_w2v.word2vec_all_words_to_pldf(word2vec_model)
 
 
-def gr_top_similar_words(
-        gradio_state: GradioState, positive_words, negative_words
-):
-
+def gr_top_similar_words(gradio_state: GradioState, positive_words, negative_words):
     check_none = (positive_words is None) and (negative_words is None)
     check_empty = (positive_words == []) and (negative_words == [])
     if check_none or check_empty:
@@ -86,15 +78,12 @@ def gr_top_similar_words(
 
     word2vec_model = gradio_state.loaded_w2v_model_file
 
-    return ensim_w2v.gensim_wordvec_top_simword(
+    return gensim_w2v.gensim_wordvec_top_simword(
         word2vec_model, positive_words, negative_words
     )
 
 
-def gr_two_words_similar(
-        gradio_state: GradioState, target_words1, target_words2
-):
-
+def gr_two_words_similar(gradio_state: GradioState, target_words1, target_words2):
     check_none = (target_words1 is None) or (target_words2 is None)
     check_empty = (target_words1 == []) or (target_words2 == [])
     if check_none or check_empty:
@@ -102,7 +91,7 @@ def gr_two_words_similar(
 
     word2vec_model = gradio_state.loaded_w2v_model_file
 
-    return ensim_w2v.gensim_wordvec_two_words_sim(
+    return gensim_w2v.gensim_wordvec_two_words_sim(
         word2vec_model, target_words1, target_words2
     )
 
@@ -110,19 +99,21 @@ def gr_two_words_similar(
 # GradioのUI ###########################################
 
 with gr.Blocks() as main_app:
-
     gradio_state = gr.State(GradioState())
 
     with gr.Row():
-        gr.Markdown(("# Gensim 4.3.3のWord2vecのデモアプリ  "
-                     "\n・単語分散表現のモデル(`.bin`か`.vec`)を試せます。  "
-                     "\n・アプリ起動前に`./model_files/`にモデルのファイルを入れておいてください。  "
-                     "\n・下記リンクにあるWord2vecとfastTextの何個かのモデルでの動作を確認済み  "
-                     "\n https://qiita.com/"
-                     "Hironsan/items/513b9f93752ecee9e670  "
-                     "\n https://www.cl.ecei.tohoku.ac.jp/"
-                     "~m-suzuki/jawiki_vector/  "
-                     ))
+        gr.Markdown(
+            (
+                "# Gensim 4.3.3のWord2vecのデモアプリ  "
+                "\n・単語分散表現のモデル(`.bin`か`.vec`)を試せます。  "
+                "\n・アプリ起動前に`./model_files/`にモデルのファイルを入れておいてください。  "
+                "\n・下記リンクにあるWord2vecとfastTextの何個かのモデルでの動作を確認済み  "
+                "\n https://qiita.com/"
+                "Hironsan/items/513b9f93752ecee9e670  "
+                "\n https://www.cl.ecei.tohoku.ac.jp/"
+                "~m-suzuki/jawiki_vector/  "
+            )
+        )
 
     with gr.Row():
         with gr.Column(scale=9):
@@ -167,9 +158,7 @@ with gr.Blocks() as main_app:
                 )
             )
         with gr.Row():
-
             with gr.Column(scale=2):
-
                 positive_word = gr.Dropdown(
                     label="プラスの影響を与える単語を入力！(ポジティブ)",
                     multiselect=True,
@@ -199,9 +188,11 @@ with gr.Blocks() as main_app:
                 )
 
             with gr.Column(scale=3):
-                similarwords_btn = gr.Button("分散表現から似ている単語を出力！",
-                                             variant="primary",
-                                             interactive=False)
+                similarwords_btn = gr.Button(
+                    "分散表現から似ている単語を出力！",
+                    variant="primary",
+                    interactive=False,
+                )
                 similar_result = gr.Dataframe(label="似ている単語の上位200個")
 
     with gr.Tab("2つの単語リストのコサイン類似度を出力"):
@@ -220,9 +211,7 @@ with gr.Blocks() as main_app:
             )
 
         with gr.Row():
-
             with gr.Column(scale=2):
-
                 target_words1 = gr.Dropdown(
                     label="単語リスト1を入力！",
                     multiselect=True,
@@ -250,8 +239,9 @@ with gr.Blocks() as main_app:
                 )
 
             with gr.Column(scale=3):
-                two_words_sim_btn = gr.Button("2つの単語リストのコサイン類似度を出力",
-                                              variant="primary")
+                two_words_sim_btn = gr.Button(
+                    "2つの単語リストのコサイン類似度を出力", variant="primary"
+                )
                 two_words_sim_result = gr.Textbox()
 
     # GradioのUIのイベントリスナーを設定する ###############################################
@@ -263,24 +253,27 @@ with gr.Blocks() as main_app:
     word2vec_model_load_btn.click(
         fn=gr_load_word2vec_model,
         inputs=[gradio_state, word2vec_model_select],
-        outputs=word2vec_loaded_model
+        outputs=word2vec_loaded_model,
     )
 
     word2vec_loaded_model.change(
         fn=gr_get_word2vec_model_words_list,
         inputs=[gradio_state],
-        outputs=word2vec_model_words_list
+        outputs=word2vec_model_words_list,
     )
 
-    similarwords_btn.click(fn=gr_top_similar_words,
-                           inputs=[gradio_state,
-                                   positive_word, negative_word],
-                           outputs=similar_result)
+    similarwords_btn.click(
+        fn=gr_top_similar_words,
+        inputs=[gradio_state, positive_word, negative_word],
+        outputs=similar_result,
+    )
 
-    two_words_sim_btn.click(fn=gr_two_words_similar,
-                            inputs=[gradio_state,
-                                    target_words1, target_words2],
-                            outputs=two_words_sim_result)
+    two_words_sim_btn.click(
+        fn=gr_two_words_similar,
+        inputs=[gradio_state, target_words1, target_words2],
+        outputs=two_words_sim_result,
+    )
 
 
+main_app.launch(share=False)
 main_app.launch(share=False)

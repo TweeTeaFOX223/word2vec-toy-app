@@ -35,6 +35,7 @@ https://qiita.com/kuroitu/items/c18129bcdd0c343d16ba
 | --------------------------------- | ---------------------------- |
 | プログラミング言語                | Python 3.11           |
 | Pythonのバージョン管理とパッケージ管理       | uv 0.5.4                          |
+| Pythonのリンターとフォーマッター       | Ruff 0.8.0                          |
 | Pythonの仮想環境                  | venv                         |
 | **Word2vecの利用** | Gensim 4.3.3 (LGPLv2.1)                      |
 | **Web UIのアプリ** | Gradio 5.3.0 (Apache License 2.0)                      |
@@ -76,15 +77,15 @@ https://stackoverflow.com/questions/8580223/using-python-module-on-lgpl-license-
 # アプリの使用方法 
 ## [0]：必要となる環境
 
-Pythonのインストールが必須です。uvの使用は任意です（軽量・Python本体のバージョン管理が可能・簡単かつ確実な動作が可能となるので推奨です →[インストール＆使用方法のおすすめ記事](https://zenn.dev/turing_motors/articles/594fbef42a36ee)）。
+Pythonのインストールが必須です。uvの使用は任意です（軽量・Python本体のバージョン管理が可能・簡単かつ確実な動作が可能となるので推奨です）。Ruffの使用は任意です(VSCodeでは使用する設定になっています `.vscode/settings.json`)。 →[uvとRuffのインストール＆使用方法のおすすめ記事](https://zenn.dev/turing_motors/articles/594fbef42a36ee)。
 
 動作確認はWindows10とPowerShellとFirefoxでやりました。おそらく他のOSやターミナルでも動くと思います。
 
   
 | インストールが必要 | 動作確認したver |
 | ---------------------- | --------------- |
-| Python                     | v3.11         |
-| uv(任意)                | v0.5.4        |
+| Python                     | 3.11         |
+| uv(任意)                | 0.5.4        |
   
 <br>  
   

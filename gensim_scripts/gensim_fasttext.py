@@ -3,11 +3,9 @@ import polars as pl
 from gensim.models.fasttext import FastTextKeyedVectors
 
 
-def fasttext_all_words_to_pldf(
-    fasttext_model: FastTextKeyedVectors
-):
+def fasttext_all_words_to_pldf(fasttext_model: FastTextKeyedVectors):
     word_data = []
-    for word in (fasttext_model.key_to_index):
+    for word in fasttext_model.key_to_index:
         word_data.append(word)
 
     words_df = pl.DataFrame(data={"単語": word_data}).with_row_index(
@@ -17,10 +15,7 @@ def fasttext_all_words_to_pldf(
     return words_df
 
 
-def check_fasttext_model_in_words(
-        fasttext_model: FastTextKeyedVectors,
-        target_words):
-
+def check_fasttext_model_in_words(fasttext_model: FastTextKeyedVectors, target_words):
     exsist_words = []
     non_exsist_words = []
 
@@ -35,11 +30,9 @@ def check_fasttext_model_in_words(
 
 
 if __name__ == "__main__":
-
-    wordvec_model: FastTextKeyedVectors = \
-        gensim.models.fasttext.load_facebook_model(
-            "./gensim_scripts/fasttext-models/fasttext-157lang/cc.ja.300.bin"
-        ).wv
+    wordvec_model: FastTextKeyedVectors = gensim.models.fasttext.load_facebook_model(
+        "./model_files/fasttext-models/fasttext-157lang/cc.ja.300.bin"
+    ).wv
 
     print(type(wordvec_model))
 

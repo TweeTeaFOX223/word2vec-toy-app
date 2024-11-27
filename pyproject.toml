@@ -9,3 +9,11 @@ dependencies = [
     "polars>=1.1.0",
     "gensim==4.3.3",
 ]
+
+[tool.ruff]
+line-length = 88
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8.0",
+]
