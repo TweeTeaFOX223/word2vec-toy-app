@@ -1,11 +1,8 @@
 # word2vec-toy-app
-**これは作りかけのアプリです。(とりあえず動きはする)**
-
-# 目次
 - [word2vec-toy-app](#word2vec-toy-app)
-- [目次](#目次)
 - [アプリの機能と概要](#アプリの機能と概要)
-  - [ロードしたモデルの語彙リストを表示](#ロードしたモデルの語彙リストを表示)
+  - [単語分散表現のモデルのロード](#単語分散表現のモデルのロード)
+  - [ロードした単語分散表現のモデルの全語彙の一覧を表示](#ロードした単語分散表現のモデルの全語彙の一覧を表示)
   - [入力した単語リストに対してコサイン類似度が上位の単語のランキングを出力](#入力した単語リストに対してコサイン類似度が上位の単語のランキングを出力)
   - [入力した2つの単語リストのコサイン類似度を出力](#入力した2つの単語リストのコサイン類似度を出力)
 - [ライセンスについて](#ライセンスについて)
@@ -20,8 +17,9 @@
 - [アプリ起動中に使えるAPI](#アプリ起動中に使えるapi)
 - [`uv.lock`から`requirements.txt`を生成する方法](#uvlockからrequirementstxtを生成する方法)
 - [使用ライブラリのライセンス](#使用ライブラリのライセンス)
-
-
+  
+<br>  
+  
 # アプリの機能と概要
 Word2vecの学習済みモデルとGensimでサクッと遊ぶために、Gradioを用いて作成したローカル用のWebアプリです。  
   
@@ -44,9 +42,25 @@ https://qiita.com/kuroitu/items/c18129bcdd0c343d16ba
   
 <br>    
   
-## ロードしたモデルの語彙リストを表示
-未完成の機能なので後で書く。  
+## 単語分散表現のモデルのロード
+・ディレクトリに配置したモデルを選択して読み込みます。  
+・`gensim.models.KeyedVectors.load_word2vec_format`を使って読み込みます。  
+https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.load_word2vec_format  
+![](https://raw.githubusercontent.com/TweeTeaFOX223/word2vec-toy-app/main/README-image/model_load.PNG)
+  
+<br>    
+  
+## ロードした単語分散表現のモデルの全語彙の一覧を表示
+・モデルを読み込むと自動的に↓に語彙のリストを表示します  
+・Gensimのkeyedvectorsのkey_to_indexから取得して表示しています。  
 https://stackoverflow.com/questions/66868221/gensim-3-8-0-to-gensim-4-0-0  
+・Gradioのデータフレームの仕様で全行の表示はできないようです。  
+・以下のように対処方法のアイディアはあるけど今回の実装は無し  
+https://x.com/TweeTea277/status/1826586217510830603  
+https://x.com/TweeTea277/status/1826589899631591776  
+![](https://raw.githubusercontent.com/TweeTeaFOX223/word2vec-toy-app/main/README-image/word_list.PNG)
+  
+<br>    
   
 ## 入力した単語リストに対してコサイン類似度が上位の単語のランキングを出力
 ・「入力した単語と似ている単語200件のランキング」を表示します。  
@@ -113,10 +127,10 @@ https://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/
 <br>  
   
 ## [3]：学習済みモデルをディレクトリに配置
-クローンしたプロジェクトのディレクトリの`./model_files/`以下に、入手した学習済みモデル(`.bin`か`.vec`)を配置します。
+クローンしたプロジェクトのディレクトリの`./model_files/`以下に、入手した学習済みモデル(`.bin`か`.vec`)を配置します。ロードの選択時には再帰的に探すので、間にディレクトリを挟んでも大丈夫です。(`./model_files/model_name/model.bin`みたいな感じ)
 
 
-※`gensim.models.KeyedVectors.load_word2vec_format`を使って読み込みます。  
+`gensim.models.KeyedVectors.load_word2vec_format`を使って読み込みます。  
 https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.load_word2vec_format  
   
 <br>  
@@ -150,7 +164,9 @@ https://www.gradio.app/guides/getting-started-with-the-python-client
 # `uv.lock`から`requirements.txt`を生成する方法
 
 このコマンドで生成できます。パッと検索しても書いてる記事見つからなかったので一応記載。  
-`uv export --format requirements-txt --output-file requirements.txt `  
+```
+uv export --format requirements-txt --output-file requirements.txt 
+```  
 
 公式ドキュメントより  https://docs.astral.sh/uv/reference/cli/#uv-export  
   

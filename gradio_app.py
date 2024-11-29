@@ -133,10 +133,13 @@ with gr.Blocks() as main_app:
             (
                 "\n **ロードした単語分散表現のモデルの全語彙の一覧を表示** \n  "
                 "\n・モデルを読み込むと自動的に↓に語彙のリストを表示します  "
-                "\n・読み込んだWord2vecモデルの語彙に無い単語を入力するとエラーです。  "
                 "\n・Gensimのkeyedvectorsのkey_to_indexから取得して表示しています。  "
                 "\nhttps://stackoverflow.com/questions/"
-                "66868221/gensim-3-8-0-to-gensim-4-0-0"
+                "66868221/gensim-3-8-0-to-gensim-4-0-0  "
+                "\n・Gradioのデータフレームの仕様で全行の表示はできないようです。  "
+                "\n・以下のように対処方法のアイディアはあるけど今回の実装は無し  "
+                "\nhttps://x.com/TweeTea277/status/1826586217510830603  "
+                "\nhttps://x.com/TweeTea277/status/1826589899631591776  "
             )
         )
         word2vec_model_words_list = gr.Dataframe(label="モデルの全語彙の一覧")
