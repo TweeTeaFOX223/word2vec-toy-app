@@ -105,7 +105,7 @@ def gensim_wordvec_two_words_sim(wordvec_model, target_words1, target_words2):
 
 if __name__ == "__main__":
     wordvec_model = gensim.models.KeyedVectors.load_word2vec_format(
-        "./gensim_scripts/word2vec_models/vector_neologd/model.bin", binary=True
+        "./model_files//word2vec-models/vector_neologd/model.bin", binary=True
     )
     # wordvec_model: FastTextKeyedVectors = \
     #     gensim.models.fasttext.load_facebook_model(

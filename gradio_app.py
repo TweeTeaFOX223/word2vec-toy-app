@@ -101,7 +101,7 @@ def gr_two_words_similar(gradio_state: GradioState, target_words1, target_words2
 with gr.Blocks() as main_app:
     gradio_state = gr.State(GradioState())
 
-    with gr.Row():
+    with gr.Row(variant="compact"):
         gr.Markdown(
             (
                 "# Gensim 4.3.3のWord2vecのデモアプリ  "
@@ -115,7 +115,7 @@ with gr.Blocks() as main_app:
             )
         )
 
-    with gr.Row():
+    with gr.Row(variant="panel"):
         with gr.Column(scale=9):
             word2vec_model_select = gr.Dropdown(
                 GENSIM_WORDVEC_MODELS,
@@ -123,9 +123,9 @@ with gr.Blocks() as main_app:
             )
         with gr.Column(scale=1, min_width=160):
             word2vec_model_load_btn = gr.Button(
-                "モデルをロード", scale=1, variant="primary"
+                "モデルをロード", variant="primary", size="lg", min_width=36
             )
-    with gr.Row():
+    with gr.Row(variant="panel"):
         word2vec_loaded_model = gr.Textbox(label="ロードされたモデルのパス")
 
     with gr.Tab("ロードしたモデルの全語彙の一覧"):
@@ -240,20 +240,28 @@ with gr.Blocks() as main_app:
 
             with gr.Column(scale=3):
                 two_words_sim_btn = gr.Button(
-                    "2つの単語リストのコサイン類似度を出力", variant="primary"
+                    "2つの単語リストのコサイン類似度を出力",
+                    variant="primary",
+                    interactive=False,
                 )
                 two_words_sim_result = gr.Textbox()
 
     # GradioのUIのイベントリスナーを設定する ###############################################
 
     word2vec_model_load_btn.click(
-        fn=ready_interactive,
-        outputs=similarwords_btn,
-    )
-    word2vec_model_load_btn.click(
         fn=gr_load_word2vec_model,
         inputs=[gradio_state, word2vec_model_select],
         outputs=word2vec_loaded_model,
+    )
+
+    word2vec_loaded_model.change(
+        fn=ready_interactive,
+        outputs=similarwords_btn,
+    )
+
+    word2vec_loaded_model.change(
+        fn=ready_interactive,
+        outputs=two_words_sim_btn,
     )
 
     word2vec_loaded_model.change(

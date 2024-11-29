@@ -100,7 +100,7 @@ cd word2vec-toy-app
 <br>  
   
 ## [2]：学習済みモデルの準備
-Word2vecかfastTextの学習済みモデル(`.bin`か`.vec`)を、自分でコーパスから学習させて作成するか、インターネット上に公開されているモデルをダウンロードするかで入手してください。
+Word2vecの学習済みモデル(`.bin`か`.vec`)を、自分でコーパスから学習させて作成するか、インターネット上に公開されているモデルをダウンロードするかで入手してください。
 
 - 自分でWord2vecとfastTextのモデルを作成する方法の解説記事  
 https://qiita.com/ka-son11/items/50c16568924575b4eb69  
@@ -113,14 +113,11 @@ https://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/
 <br>  
   
 ## [3]：学習済みモデルをディレクトリに配置
-クローンしたプロジェクトのディレクトリに、入手した学習済みモデル(`.bin`か`.vec`)を配置します。
+クローンしたプロジェクトのディレクトリの`./model_files/`以下に、入手した学習済みモデル(`.bin`か`.vec`)を配置します。
 
-- Word2vecのモデルは`./model_files/word2vec-models/`に配置します。※`gensim.models.fasttext.load_facebook_model`を使って読み込みます。  
-https://radimrehurek.com/gensim/models/fasttext.html#gensim.models.fasttext.load_facebook_model  
-  
-- fastTextのモデルは`./model_files/fasttext-models`に配置します。※`gensim.models.KeyedVectors.load_word2vec_format`を使って読み込みます。  
+
+※`gensim.models.KeyedVectors.load_word2vec_format`を使って読み込みます。  
 https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.load_word2vec_format  
-
   
 <br>  
   
